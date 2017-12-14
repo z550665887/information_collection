@@ -98,9 +98,9 @@ def testapi(request):
             print(get_ip(request))
             print(request.POST['information'])
         if not IP:
-            information.objects.create(information = request.POST['information'],IP = get_ip(request))
+            information.objects.create(timestamp = str(int(time.time())), information = request.POST['information'],IP = get_ip(request))
         else:
-            pass
+            IP.update(timestamp = str(int(time.time())))
             # IP.update(information = request.POST['information'])
     return HttpResponse()
 
