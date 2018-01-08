@@ -106,7 +106,8 @@ def testapi(request):
             information.objects.create(timestamp = str(int(time.time())), information = request.POST['information'],\
                     IP = get_ip(request),version=m['version'])
         else:
-            IP.update(timestamp = str(int(time.time())))
+            m = json.loads(request.POST['information'].replace("'", '"'))['information']
+            IP.update(timestamp = str(int(time.time())),version=m['version'])
             # IP.update(information = request.POST['information'])
     return HttpResponse()
 
