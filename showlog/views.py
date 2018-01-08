@@ -90,6 +90,7 @@ def testapi(request):
     #     print(dir(request.POST))
     #     print(request.POST.keys())
     #     print(request.POST['information'])
+    # print(request.body)
     if 'information' in request.POST:
         # print(get_ip(request))
         # print(request.POST['information'])
@@ -97,8 +98,13 @@ def testapi(request):
         if get_ip(request) =="172.30.50.98":
             print(get_ip(request))
             print(request.POST['information'])
+        if get_ip(request) =="10.21.8.38":
+            print(get_ip(request))
+            print(request.POST['information'])
         if not IP:
-            information.objects.create(timestamp = str(int(time.time())), information = request.POST['information'],IP = get_ip(request))
+            m = json.loads(request.POST['information'].replace("'", '"'))['information']
+            information.objects.create(timestamp = str(int(time.time())), information = request.POST['information'],\
+                    IP = get_ip(request),version=m['version'])
         else:
             IP.update(timestamp = str(int(time.time())))
             # IP.update(information = request.POST['information'])
